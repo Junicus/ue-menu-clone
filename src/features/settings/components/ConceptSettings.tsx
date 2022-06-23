@@ -1,7 +1,9 @@
 import { Link, useParams } from "react-router-dom";
-import { useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { updateConceptDefaultStore } from "../settingsSlice";
 
 export default function ConceptSettings() {
+  const dispatch = useAppDispatch();
   const params = useParams<{ id: string }>();
   const concept = useAppSelector(
     (state) => state.settings.concepts[params.id || ""]
@@ -44,6 +46,21 @@ export default function ConceptSettings() {
                   >
                     Edit
                   </Link>
+                  {concept.source !== concept.stores[storeKey].id && (
+                    <button
+                      className="ml-3 rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                      onClick={() =>
+                        dispatch(
+                          updateConceptDefaultStore({
+                            conceptId: concept.id,
+                            storeId: storeKey,
+                          })
+                        )
+                      }
+                    >
+                      Set Default
+                    </button>
+                  )}
                 </div>
               </div>
             </li>

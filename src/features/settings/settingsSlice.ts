@@ -7,6 +7,7 @@ import deleteConceptReducer from "./reducers/deleteConceptReducer";
 import loadSettingsReducer from "./reducers/loadSettingsReducer";
 import updateClientIdReducer from "./reducers/updateClientIdReducer";
 import updateClientSecretReducer from "./reducers/updateClientSecretReducer";
+import updateConceptDefaultStoreReducer from "./reducers/updateConceptDefaultStoreReducer";
 
 export interface UEToken {
   access_token: string;
@@ -62,6 +63,7 @@ const settingsSlice = createSlice({
     updateClientSecret: updateClientSecretReducer,
     addConcept: addConceptReducer,
     deleteConcept: deleteConceptReducer,
+    updateConceptDefaultStore: updateConceptDefaultStoreReducer,
     addStore: addStoreReducer,
   },
   extraReducers: (builder) => {
@@ -89,6 +91,7 @@ export const {
   updateClientSecret,
   addConcept,
   deleteConcept,
+  updateConceptDefaultStore,
   addStore,
 } = settingsSlice.actions;
 export default settingsSlice.reducer;
