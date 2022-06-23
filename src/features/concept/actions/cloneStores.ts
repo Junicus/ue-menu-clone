@@ -2,10 +2,10 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "../../../app/store";
 
 type CloneStoresError = { message: string };
-type CloneStoresArgs = {};
+type CloneStoresArgs = { conceptId: string };
 
 export const cloneStores = createAsyncThunk<
-  undefined,
+  unknown,
   CloneStoresArgs,
   {
     dispatch: AppDispatch;
@@ -14,8 +14,9 @@ export const cloneStores = createAsyncThunk<
   }
 >(
   "concepts/cloneStores",
-  async (data: CloneStoresArgs, { rejectWithValue, dispatch, getState }) => {
+  async (data, { rejectWithValue, dispatch, getState }) => {
     try {
+      console.log(data);
     } catch (err) {
       return rejectWithValue({ message: "Error cloning stores" });
     }

@@ -3,7 +3,12 @@ import settingsReducer, { addStore, SettingsState } from "../settingsSlice";
 describe("addStore reducer", () => {
   it("should add store, and set source", () => {
     const initialState: SettingsState = {
-      ueSettings: { client_id: "", client_secret: "" },
+      ueSettings: {
+        client_id: "",
+        client_secret: "",
+        error: null,
+        tokenStatus: "idle",
+      },
       concepts: {
         test: {
           id: "test",
@@ -39,7 +44,12 @@ describe("addStore reducer", () => {
 
   it("should add store, and not change source when already set", () => {
     const initialState: SettingsState = {
-      ueSettings: { client_id: "", client_secret: "" },
+      ueSettings: {
+        client_id: "",
+        client_secret: "",
+        error: null,
+        tokenStatus: "idle",
+      },
       concepts: {
         test: {
           id: "test",

@@ -10,7 +10,7 @@ export const renewToken = createAsyncThunk<
   UEToken,
   RenewTokenArgs,
   { rejectValue: UberEatsAuthError }
->("settings/renewToken", async (credentials: RenewTokenArgs, thunkApi) => {
+>("settings/renewToken", async (credentials, { rejectWithValue }) => {
   const { client_id, client_secret } = credentials;
   try {
     const response = await getToken(client_id, client_secret);
@@ -20,6 +20,6 @@ export const renewToken = createAsyncThunk<
       .unix();
     return { ...response, expires_at };
   } catch (err) {
-    return thunkApi.rejectWithValue({ message: "Error renewing token" });
+    return rejectWithValue({ message: "Error renewing token" });
   }
 });

@@ -1,28 +1,44 @@
 import classNames from "classnames";
-import { useEffect, useState } from "react";
-import { HiChevronRight, HiHome } from "react-icons/hi";
+import { ReactNode, useEffect, useState } from "react";
+import {
+  HiChevronRight,
+  HiHome,
+  HiOutlinePause,
+  HiOutlineDotsCircleHorizontal,
+  HiOutlineCheckCircle,
+  HiOutlineExclamationCircle,
+} from "react-icons/hi";
 import { Link, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { Store } from "../settings/settingsSlice";
-import { resetConcept } from "./conceptsSlice";
+import selectConceptWithStores from "../settings/selectors/selectConceptWithStores";
+
+import { CloningStore, initializeConcept } from "./conceptsSlice";
 
 export default function ConceptPage() {
+  const { id } = useParams<{ id: string }>() as { id: string };
   const dispatch = useAppDispatch();
-  const params = useParams<{ id: string }>();
-  const settings = useAppSelector((state) => ({
-    concept: state.settings.concepts[params.id || ""],
-    stores: Object.keys(state.settings.concepts[params.id || ""].stores).map(
-      (storeKey) => state.settings.concepts[params.id || ""].stores[storeKey]
-    ),
-  }));
-
-  const [selectedStore, setSelectedStore] = useState<string | undefined>(
-    settings.concept.source
-  );
+  const settings = useAppSelector(selectConceptWithStores(id));
+  const [selectedStore, setSelectedStore] = useState(settings.concept.source);
 
   useEffect(() => {
-    dispatch(resetConcept());
-  }, [dispatch, params]);
+    dispatch(
+      initializeConcept({
+        conceptId: id,
+        stores: Object.keys(settings.concept.stores).map((storeKey) => ({
+          id: settings.concept.stores[storeKey].id,
+          name: settings.concept.stores[storeKey].name,
+        })),
+      })
+    );
+  }, [dispatch, id]);
+
+  const stores = useAppSelector((state) =>
+    Object.keys(state.concepts[id].stores).map(
+      (storeKey) => state.concepts[id].stores[storeKey]
+    )
+  );
+
+  console.log(stores);
 
   return (
     <div className="h-screen page-layout">
@@ -59,20 +75,24 @@ export default function ConceptPage() {
               </button>
             </div>
           </div>
-          <ConceptsList stores={settings.stores} sourceId={selectedStore} />
+          <ConceptsList stores={stores} sourceId={selectedStore} />
         </div>
       </div>
     </div>
   );
 }
 
-function ConceptsList(props: { stores: Store[]; sourceId?: string }) {
+const statusMap: Record<string, ReactNode> = {
+  idle: <HiOutlinePause />,
+};
+
+function ConceptsList(props: { stores: CloningStore[]; sourceId?: string }) {
   return (
     <div className="mt-5 border-t border-gray-200">
       <ul className="divide-y divide-gray-200">
         {props.stores.map((store) => (
           <li key={store.id} className="py-4">
-            <div>
+            <div className="flex justify-between">
               <p
                 className={classNames(
                   "text-sm font-medium",
@@ -83,6 +103,7 @@ function ConceptsList(props: { stores: Store[]; sourceId?: string }) {
               >
                 {store.name}
               </p>
+              <p>{statusMap[store.status]}</p>
             </div>
           </li>
         ))}

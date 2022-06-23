@@ -1,52 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { cloneStores } from "./actions/cloneStores";
 import resetConceptReducer from "./reducers/resetConceptReducer";
+import initializeConceptReducer from "./reducers/initializeConceptReducer";
 
 export interface CloningStore {
   id: string;
   name: string;
   status: "idle" | "source" | "cloning" | "success" | "failed";
 }
-export interface CloningConcept {
-  id: string;
-  name: string;
-  stores: Record<string, CloningStore>;
-}
 
 export interface ConceptState {
-  concept?: CloningConcept;
-  runningStatus: "idle" | "running";
-  error: string | null;
+  id: string;
+  status: "idle";
+  stores: Record<string, CloningStore>;
 }
+export interface ConceptsState extends Record<string, ConceptState> {}
 
-const initialState: ConceptState = {
-  runningStatus: "idle",
-  error: null,
-};
+const initialState: ConceptsState = {};
 
 const conceptsSlice = createSlice({
   name: "concept",
   initialState,
   reducers: {
     resetConcept: resetConceptReducer,
+    initializeConcept: initializeConceptReducer,
   },
-  extraReducers: (builder) => {
-    builder.addCase(cloneStores.pending, (state) => {
-      state.runningStatus = "running";
-      state.error = null;
-    });
-
-    builder.addCase(cloneStores.fulfilled, (state) => {
-      state.runningStatus = "idle";
-      state.error = null;
-    });
-
-    builder.addCase(cloneStores.rejected, (state, { payload }) => {
-      if (payload) state.error = payload.message;
-      state.runningStatus = "idle";
-    });
-  },
+  extraReducers: (builder) => {},
 });
 
-export const { resetConcept } = conceptsSlice.actions;
+export const { resetConcept, initializeConcept } = conceptsSlice.actions;
 export default conceptsSlice.reducer;
