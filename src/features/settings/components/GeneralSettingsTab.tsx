@@ -18,8 +18,8 @@ function formatExpiresAt(expires_at?: number): string {
 
 export default function GeneralSettingsTab() {
   return (
-    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <div className="mt-5">
+    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 overflow-auto">
+      <div>
         <h3 className="text-lg font-medium leading-6 text-gray-900">
           UberEats Settings
         </h3>
@@ -179,7 +179,7 @@ function AccessTokenSetting() {
             className="rounded-md font-medium text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
             onClick={() => renewTokenCallback()}
           >
-            Update
+            Renew Token
           </button>
         </span>
       </dd>

@@ -6,6 +6,6 @@ export default function loadSettings(
   action: PayloadAction<SettingsState | null>
 ) {
   if (action.payload) {
-    state.ueSettings = { ...action.payload.ueSettings };
+    Object.assign(state, action.payload);
   }
 }

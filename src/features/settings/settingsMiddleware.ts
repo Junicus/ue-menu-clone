@@ -7,6 +7,7 @@ export function settingsMiddleware(
   invoke: InvokeFunction<unknown>
 ): Middleware {
   return (store) => (next) => (action) => {
+    console.log(action);
     const result = next(action);
     if (typeof action === "object") {
       const reducerName = action.type.split("/")[0];

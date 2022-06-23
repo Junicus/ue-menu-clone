@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { renewToken } from "./actions/renewToken";
 import addConceptReducer from "./reducers/addConceptReducer";
 import addStoreReducer from "./reducers/addStoreReducer";
+import deleteConceptReducer from "./reducers/deleteConceptReducer";
 
 import loadSettingsReducer from "./reducers/loadSettingsReducer";
 import updateClientIdReducer from "./reducers/updateClientIdReducer";
@@ -60,6 +61,7 @@ const settingsSlice = createSlice({
     updateClientId: updateClientIdReducer,
     updateClientSecret: updateClientSecretReducer,
     addConcept: addConceptReducer,
+    deleteConcept: deleteConceptReducer,
     addStore: addStoreReducer,
   },
   extraReducers: (builder) => {
@@ -86,6 +88,7 @@ export const {
   updateClientId,
   updateClientSecret,
   addConcept,
+  deleteConcept,
   addStore,
 } = settingsSlice.actions;
 export default settingsSlice.reducer;

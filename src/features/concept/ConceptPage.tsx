@@ -5,3 +5,5 @@ export default function ConceptPage() {
     </div>
   );
 }
+
+function ConceptsList() {}

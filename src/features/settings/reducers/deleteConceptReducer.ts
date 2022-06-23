@@ -3,9 +3,11 @@ import { Concept, SettingsState } from "../settingsSlice";
 
 export type ConceptPayload = Omit<Required<Concept>, "source" | "stores">;
 
-export default function addConceptReducer(
+export default function deleteConceptReducer(
   state: SettingsState,
-  action: PayloadAction<ConceptPayload>
+  action: PayloadAction<string>
 ) {
-  state.concepts[action.payload.id] = { ...action.payload, stores: {} };
+  const concepts = { ...state.concepts };
+  delete concepts[action.payload];
+  state.concepts = { ...concepts };
 }
