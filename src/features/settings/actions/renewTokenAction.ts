@@ -6,7 +6,7 @@ import { getToken } from "../../../app/ueApi";
 type UberEatsAuthError = { message: string };
 type RenewTokenArgs = { client_id: string; client_secret: string };
 
-export const renewToken = createAsyncThunk<
+export const renewTokenAction = createAsyncThunk<
   UEToken,
   RenewTokenArgs,
   { rejectValue: UberEatsAuthError }

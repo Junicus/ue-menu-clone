@@ -1,4 +1,5 @@
 import { http } from "@tauri-apps/api";
+import { gzip } from "pako";
 
 export interface UEToken {
   access_token: string;
@@ -27,4 +28,48 @@ export async function getToken(
     }
   );
   return result.data;
+}
+
+export async function getMenu(
+  uberId: string,
+  token: UEToken | undefined
+): Promise<any> {
+  console.log(uberId, token);
+  if (token) {
+    const result = await http.fetch<any>(
+      `https://api.uber.com/v2/eats/stores/${uberId}/menus`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `${token.token_type} ${token.access_token}`,
+        },
+      }
+    );
+    return result.data;
+  }
+}
+
+export async function uploadMenu(
+  uberId: string,
+  body: any,
+  token: UEToken | undefined
+): Promise<any> {
+  let compressedBody = gzip(JSON.stringify(body));
+  console.log(compressedBody);
+  console.log(uberId, body);
+  // if (token) {
+  //   const result = await http.fetch<any>(
+  //     `https://api.uber.com/v2/eats/stores/${uberId}/menus`,
+  //     {
+  //       method: "PUT",
+  //       body: { payload: compressedBody, type: "Bytes" },
+  //       headers: {
+  //         authorization: `${token.token_type} ${token.access_token}`,
+  //         "Content-Type": "application/json",
+  //         "Content-Encoding": "gzip",
+  //       },
+  //     }
+  //   );
+  //   return result.data;
+  // }
 }

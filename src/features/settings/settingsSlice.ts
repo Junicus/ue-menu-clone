@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { renewToken } from "./actions/renewToken";
+import { addStoreAction } from "./actions/addStoreAction";
+import { renewTokenAction } from "./actions/renewTokenAction";
 
 import addConceptReducer from "./reducers/addConceptReducer";
 import addStoreReducer from "./reducers/addStoreReducer";
@@ -8,6 +9,7 @@ import loadSettingsReducer from "./reducers/loadSettingsReducer";
 import updateClientIdReducer from "./reducers/updateClientIdReducer";
 import updateClientSecretReducer from "./reducers/updateClientSecretReducer";
 import updateConceptDefaultStoreReducer from "./reducers/updateConceptDefaultStoreReducer";
+import updateStoreReducer from "./reducers/updateStoreReducer";
 
 export interface UEToken {
   access_token: string;
@@ -65,20 +67,21 @@ const settingsSlice = createSlice({
     deleteConcept: deleteConceptReducer,
     updateConceptDefaultStore: updateConceptDefaultStoreReducer,
     addStore: addStoreReducer,
+    updateStore: updateStoreReducer,
   },
   extraReducers: (builder) => {
-    builder.addCase(renewToken.pending, (state) => {
+    builder.addCase(renewTokenAction.pending, (state) => {
       state.ueSettings.tokenStatus = "loading";
       state.ueSettings.error = null;
     });
 
-    builder.addCase(renewToken.fulfilled, (state, { payload }) => {
+    builder.addCase(renewTokenAction.fulfilled, (state, { payload }) => {
       state.ueSettings.token = payload;
       state.ueSettings.tokenStatus = "idle";
       state.ueSettings.error = null;
     });
 
-    builder.addCase(renewToken.rejected, (state, { payload }) => {
+    builder.addCase(renewTokenAction.rejected, (state, { payload }) => {
       if (payload) state.ueSettings.error = payload.message;
       state.ueSettings.tokenStatus = "idle";
     });
@@ -93,5 +96,6 @@ export const {
   deleteConcept,
   updateConceptDefaultStore,
   addStore,
+  updateStore,
 } = settingsSlice.actions;
 export default settingsSlice.reducer;

@@ -1,5 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { setSelectedStore } from "../../concept/conceptsSlice";
 import { updateConceptDefaultStore } from "../settingsSlice";
 
 export default function ConceptSettings() {
@@ -8,11 +9,13 @@ export default function ConceptSettings() {
   const concept = useAppSelector(
     (state) => state.settings.concepts[params.id || ""]
   );
-  const storeKeys = Object.keys(concept.stores);
+  const storeKeys = Object.keys(concept.stores).sort((a, b) =>
+    a.localeCompare(b)
+  );
 
   return (
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 row-auto">
-      <div className="mt-5 flex">
+      <div className="flex">
         <h3 className="text-lg font-medium leading-6 texzt-gray-900">
           Concept: {concept.name}
         </h3>
@@ -41,7 +44,8 @@ export default function ConceptSettings() {
                 </div>
                 <div>
                   <Link
-                    to={`/settings/concepts/concept/${concept.id}`}
+                    to={`/settings/concepts/edit_store`}
+                    state={{ conceptId: concept.id, storeId: storeKey }}
                     className="rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     Edit
@@ -49,14 +53,20 @@ export default function ConceptSettings() {
                   {concept.source !== concept.stores[storeKey].id && (
                     <button
                       className="ml-3 rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                      onClick={() =>
+                      onClick={() => {
                         dispatch(
                           updateConceptDefaultStore({
                             conceptId: concept.id,
                             storeId: storeKey,
                           })
-                        )
-                      }
+                        );
+                        dispatch(
+                          setSelectedStore({
+                            conceptId: concept.id,
+                            storeId: storeKey,
+                          })
+                        );
+                      }}
                     >
                       Set Default
                     </button>

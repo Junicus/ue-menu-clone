@@ -1,15 +1,17 @@
 import conceptsReducer, {
   ConceptsState,
   initializeConcept,
+  setSelectedStore,
 } from "../conceptsSlice";
 
-describe("initializeConcept tests", () => {
+describe("setSelectedStore tests", () => {
   it("should work", () => {
-    const initialState: ConceptsState = {};
-    const action = initializeConcept({
+    const initialState: ConceptsState = {
+      test: { id: "test", status: "idle", selectedStore: "", stores: {} },
+    };
+    const action = setSelectedStore({
       conceptId: "test",
-      selectedStore: "123",
-      stores: [{ id: "123", name: "Test Store" }],
+      storeId: "123",
     });
     const result = conceptsReducer(initialState, action);
     expect(result).toEqual({
@@ -17,9 +19,7 @@ describe("initializeConcept tests", () => {
         id: "test",
         status: "idle",
         selectedStore: "123",
-        stores: {
-          "123": { id: "123", name: "Test Store", status: "idle" },
-        },
+        stores: {},
       },
     });
   });

@@ -5,12 +5,14 @@ import { deleteConcept } from "../settingsSlice";
 
 export default function ConceptsSettingsTab() {
   const concepts = useAppSelector((state) =>
-    Object.keys(state.settings.concepts).map((conceptKey) => ({
-      id: conceptKey,
-      name: state.settings.concepts[conceptKey].name,
-      label: state.settings.concepts[conceptKey].label,
-      stores: Object.keys(state.settings.concepts[conceptKey].stores).length,
-    }))
+    Object.keys(state.settings.concepts)
+      .sort((a, b) => a.localeCompare(b))
+      .map((conceptKey) => ({
+        id: conceptKey,
+        name: state.settings.concepts[conceptKey].name,
+        label: state.settings.concepts[conceptKey].label,
+        stores: Object.keys(state.settings.concepts[conceptKey].stores).length,
+      }))
   );
 
   const dispatch = useAppDispatch();
@@ -24,7 +26,7 @@ export default function ConceptsSettingsTab() {
 
   return (
     <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-      <div className="mt-5 flex">
+      <div className="flex">
         <h3 className="text-lg font-medium leading-6 texzt-gray-900">
           Concepts Settings
         </h3>
@@ -59,7 +61,7 @@ export default function ConceptsSettingsTab() {
                   </Link>
                   <button
                     onClick={() => deleteConceptCallback(concept.id)}
-                    className="ml-3 rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="ml-3 rounded-md font-medium text-red-600 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                   >
                     Delete
                   </button>

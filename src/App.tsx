@@ -17,6 +17,7 @@ import ConceptsSettingsTab from "./features/settings/components/ConceptsSettings
 import NewConceptSettings from "./features/settings/components/NewConceptSettings";
 import ConceptSettings from "./features/settings/components/ConceptSettings";
 import NewStoreSettings from "./features/settings/components/NewStoreSettings";
+import EditStoreSettings from "./features/settings/components/EditStoreSettings";
 
 function App() {
   useEffect(() => {
@@ -36,6 +37,7 @@ function App() {
             <Route index element={<ConceptsSettingsTab />} />
             <Route path="new_concept" element={<NewConceptSettings />} />
             <Route path="new_store" element={<NewStoreSettings />} />
+            <Route path="edit_store" element={<EditStoreSettings />} />
             <Route path="concept/:id" element={<ConceptSettings />} />
           </Route>
         </Route>

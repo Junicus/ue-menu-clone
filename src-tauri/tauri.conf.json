@@ -46,7 +46,10 @@
       "http": {
         "all": true,
         "request": true,
-        "scope": ["https://login.uber.com/*"]
+        "scope": [
+          "https://login.uber.com/*",
+          "https://api.uber.com/v2/eats/stores/*"
+        ]
       }
     },
     "bundle": {

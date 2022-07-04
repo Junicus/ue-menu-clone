@@ -9,6 +9,7 @@ interface Store {
 
 interface InitializeConceptReducerPayload {
   conceptId: string;
+  selectedStore: string | undefined;
   stores: Store[];
 }
 
@@ -19,6 +20,7 @@ export default function initializeConceptReducer(
   state[action.payload.conceptId] = {
     id: action.payload.conceptId,
     status: "idle",
+    selectedStore: action.payload.selectedStore || "",
     stores: {},
   };
   action.payload.stores.forEach((store) => {
@@ -28,5 +30,4 @@ export default function initializeConceptReducer(
       status: "idle",
     };
   });
-  console.log(action);
 }

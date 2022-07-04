@@ -1,8 +1,9 @@
 import { useCallback, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { updateClientId, updateClientSecret } from "../settingsSlice";
-import { renewToken } from "../actions/renewToken";
+import { renewTokenAction } from "../actions/renewTokenAction";
 import moment from "moment";
+import { setSelectedStore } from "../../concept/conceptsSlice";
 
 function formatToken(token?: string): string {
   if (token === undefined) return "";
@@ -152,7 +153,7 @@ function AccessTokenSetting() {
   const dispatch = useAppDispatch();
 
   const renewTokenCallback = useCallback(() => {
-    dispatch(renewToken({ client_id, client_secret }));
+    dispatch(renewTokenAction({ client_id, client_secret }));
   }, [dispatch, client_id, client_secret]);
 
   return (
