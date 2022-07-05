@@ -10,7 +10,11 @@ mod settings;
 fn main() {
     let context = tauri::generate_context!();
     tauri::Builder::default()
-        .menu(tauri::Menu::os_default(&context.package_info().name))
+        .menu(if cfg!(target_os = "macos") {
+            tauri::Menu::os_default(&context.package_info().name)
+        } else {
+            tauri::Menu::default()
+        })
         .setup(|app| {
             let handle = app.handle();
             settings::init(handle);

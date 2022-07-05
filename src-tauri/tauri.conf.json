@@ -7,7 +7,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "ue-menu-clone",
+    "productName": "UE Menu Clone",
     "version": "0.1.0"
   },
   "tauri": {
