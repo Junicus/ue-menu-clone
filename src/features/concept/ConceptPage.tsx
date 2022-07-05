@@ -54,7 +54,7 @@ export default function ConceptPage() {
 }
 
 const statusMap: Record<string, ReactNode> = {
-  idle: <HiOutlinePause />,
+  idle: null,
   cloning: <HiOutlineDotsCircleHorizontal />,
   success: <HiOutlineCheckCircle />,
   failed: <HiOutlineExclamationCircle />,
@@ -142,7 +142,19 @@ function ConceptsList({
                 >
                   {store.name}
                 </p>
-                {selectedStore !== store.id && <p>{statusMap[store.status]}</p>}
+                {selectedStore !== store.id && (
+                  <p
+                    className={classNames(
+                      store.status === "success"
+                        ? "text-green-500"
+                        : store.status === "failed"
+                        ? "text-red-500"
+                        : "text-blue-500"
+                    )}
+                  >
+                    {statusMap[store.status]}
+                  </p>
+                )}
               </div>
             </li>
           ))}

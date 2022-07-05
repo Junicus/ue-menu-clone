@@ -34,7 +34,6 @@ export async function getMenu(
   uberId: string,
   token: UEToken | undefined
 ): Promise<any> {
-  console.log(uberId, token);
   if (token) {
     const result = await http.fetch<any>(
       `https://api.uber.com/v2/eats/stores/${uberId}/menus`,
@@ -54,15 +53,28 @@ export async function uploadMenu(
   body: any,
   token: UEToken | undefined
 ): Promise<any> {
-  let compressedBody = gzip(JSON.stringify(body));
-  console.log(compressedBody);
   console.log(uberId, body);
+
   // if (token) {
   //   const result = await http.fetch<any>(
   //     `https://api.uber.com/v2/eats/stores/${uberId}/menus`,
   //     {
   //       method: "PUT",
-  //       body: { payload: compressedBody, type: "Bytes" },
+  //       body: http.Body.json(body),
+  //       headers: {
+  //         authorization: `${token.token_type} ${token.access_token}`,
+  //       },
+  //     }
+  //   );
+  //   return result.data;
+  // }
+
+  // if (token) {
+  //   const result = await http.fetch<any>(
+  //     `https://api.uber.com/v2/eats/stores/${uberId}/menus`,
+  //     {
+  //       method: "PUT",
+  //       body: http.Body.bytes(gzip(JSON.stringify(body))),
   //       headers: {
   //         authorization: `${token.token_type} ${token.access_token}`,
   //         "Content-Type": "application/json",
