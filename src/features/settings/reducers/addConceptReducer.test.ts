@@ -7,7 +7,6 @@ describe("addConcept reducer", () => {
       id: "test",
       name: "Test Concept",
       label: "TC",
-      stores: {},
     });
     const result = settingsReducer(initialState, action);
     expect(result.concepts["test"]).toEqual({

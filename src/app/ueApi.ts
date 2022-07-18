@@ -53,21 +53,21 @@ export async function uploadMenu(
   body: any,
   token: UEToken | undefined
 ): Promise<any> {
-  console.log(uberId, body);
+  //console.log(uberId, body);
 
-  // if (token) {
-  //   const result = await http.fetch<any>(
-  //     `https://api.uber.com/v2/eats/stores/${uberId}/menus`,
-  //     {
-  //       method: "PUT",
-  //       body: http.Body.json(body),
-  //       headers: {
-  //         authorization: `${token.token_type} ${token.access_token}`,
-  //       },
-  //     }
-  //   );
-  //   return result.data;
-  // }
+  if (token) {
+    const result = await http.fetch<any>(
+      `https://api.uber.com/v2/eats/stores/${uberId}/menus`,
+      {
+        method: "PUT",
+        body: http.Body.json(body),
+        headers: {
+          authorization: `${token.token_type} ${token.access_token}`,
+        },
+      }
+    );
+    return result.data;
+  }
 
   // if (token) {
   //   const result = await http.fetch<any>(

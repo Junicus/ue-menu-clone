@@ -14,7 +14,12 @@ describe("settingsMiddleware tests", () => {
     const store = { getState: jest.fn(), dispatch: jest.fn() };
 
     const action = loadSettings({
-      ueSettings: { client_id: "", client_secret: "" },
+      ueSettings: {
+        client_id: "",
+        client_secret: "",
+        tokenStatus: "idle",
+        error: null,
+      },
       concepts: {},
     });
 
@@ -31,9 +36,12 @@ describe("settingsMiddleware tests", () => {
           ueSettings: {
             client_id: "",
             client_secret: "",
+            tokenStatus: "idle",
+            error: null,
           },
           concepts: {},
         },
+        concepts: {},
       })),
       dispatch: jest.fn(),
     };
@@ -50,6 +58,8 @@ describe("settingsMiddleware tests", () => {
             ueSettings: {
               client_id: "",
               client_secret: "",
+              tokenStatus: "idle",
+              error: null,
             },
             concepts: {},
           }),

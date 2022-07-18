@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AppDispatch, RootState, store } from "../../../app/store";
+import { AppDispatch, RootState } from "../../../app/store";
 import { getMenu, uploadMenu } from "../../../app/ueApi";
 import { setStoreStatus } from "../conceptsSlice";
 
